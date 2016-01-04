@@ -5,7 +5,7 @@
   "summary": null,
   "license": "Apache-2.0",
   "source": "",
-  "project_page": null,
+  "project_page": "https://github.com/mjstein/mjs-kubernetes.git",
   "issues_url": null,
   "dependencies": [
     {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
