@@ -15,7 +15,22 @@ file{'/etc/etcd/conf':
   notify => Service['etcd']
 }
 
-service{['etcd', 'kube-apiserver', 'kube-controller-manager', 'kube-scheduler', 'flanneld']:
+service{['etcd', 'kube-apiserver', 'kube-controller-manager', 'kube-scheduler']:
   ensure => running
+}
+
+file{'/tmp/flannel-config.json':
+  ensure => present,
+  source => 'puppet:///modules/kubernetes/flannel-config',
+}
+
+exec{'populate etcd server':
+  path    => ['/bin'],
+  command => 'curl -L http://kube-master:4001/v2/keys/flannel/network/config -XPUT --data-urlencode value@/tmp/flannel-config.json',
+  notify  => Service['flanneld'],
+  require => File['/tmp/flannel-config.json']
+}
+service{'flanneld':
+  ensure => running,
 }
 }
