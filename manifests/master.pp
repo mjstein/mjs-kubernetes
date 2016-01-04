@@ -9,7 +9,7 @@ file{'/etc/kubernetes/controller-manager':
   notify  => Service['kube-controller-manager']
 }
 
-file{'/etc/etcd/conf':
+file{'/etc/etcd/etcd.conf':
   ensure => present,
   source => 'puppet:///modules/kubernetes/etcd_config',
   notify => Service['etcd']

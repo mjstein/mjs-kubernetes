@@ -56,4 +56,7 @@ file{'/etc/sysconfig/flanneld':
 if $::kubernetes::master{
   contain kubernetes::master
 }
+else {
+  contain kubernetes::minion
+}
 }
