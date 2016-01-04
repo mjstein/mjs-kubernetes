@@ -42,7 +42,7 @@
 #
 # Copyright 2015 Your name here, unless otherwise noted.
 #
-class kubernetes($master = false) {
+class kubernetes($master = false, $master_name, $master_ip, $minion_name, $minion_ip) {
 package {['docker', 'docker-logrotate', 'kubernetes', 'etcd', 'flannel']:
     ensure => present}
 
