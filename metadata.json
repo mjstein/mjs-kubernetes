@@ -1,10 +1,10 @@
 {
-  "name": "mjs-kubernetes",
+  "name": "chmjs-kubernetes",
   "version": "0.1.0",
-  "author": "mjs",
-  "summary": null,
+  "author": "chmjs",
+  "summary": "Early implementation to setup a kubernetes master and minion",
   "license": "Apache-2.0",
-  "source": "",
+  "source": "https://github.com/mjstein/mjs-kubernetes.git",
   "project_page": "https://github.com/mjstein/mjs-kubernetes.git",
   "issues_url": null,
   "dependencies": [

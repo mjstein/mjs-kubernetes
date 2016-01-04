@@ -22,6 +22,7 @@ Will add a basic minion master setup
 
 ## Setup
 set the following variables at top scope
+```
 node 'default'{
   $master_name = 'kube-master'
     $master_ip = '173.16.32.11'
@@ -38,7 +39,7 @@ node 'default'{
   }
   contain 'kubernetes'
 }
-
+```
 I plan to add these variables to hiera asap.
 
 ### What kubernetes affects
@@ -51,23 +52,24 @@ none as yet but std lib will be needed soon
 
 I have tested this on CentOS 7 since epel has all of the rpms you will need. no additional packages should be needed. As yet I have not tied down the ordering , this will follow.
 ## Usage
-+ node 'default'{
-+   $master_name = 'kube-master'
-+     $master_ip = '173.16.32.11'
-+     $minion_name = 'kube-minion1'
-+     $minion_ip = '173.16.32.12'
-+     host{$master_name:
-+       ip => $master_ip
-+     }
-+   host{$minion_name:
-+     ip => $minion_ip
-+   }
-+   class {'kubernetes':
-+     master =>$::master
-+   }
-+   contain 'kubernetes'
-+ }
-
+```
+ node 'default'{
+   $master_name = 'kube-master'
+     $master_ip = '173.16.32.11'
+     $minion_name = 'kube-minion1'
+     $minion_ip = '173.16.32.12'
+     host{$master_name:
+       ip => $master_ip
+     }
+   host{$minion_name:
+     ip => $minion_ip
+   }
+   class {'kubernetes':
+     master =>$::master
+   }
+   contain 'kubernetes'
+ }
+```
 
 ## Reference
 
