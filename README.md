@@ -15,65 +15,71 @@
 
 ## Overview
 
-A one-maybe-two sentence summary of what the module does/what problem it solves.
-This is your 30 second elevator pitch for your module. Consider including
-OS/Puppet version it works with.
+This module at present install a kubernetes master and minion. it is still heavily in development as at present should only be used on CentOS 7 unless one wishes to add their own repos
 
 ## Module Description
-
-If applicable, this section should have a brief description of the technology
-the module integrates with and what that integration enables. This section
-should answer the questions: "What does this module *do*?" and "Why would I use
-it?"
-
-If your module has a range of functionality (installation, configuration,
-management, etc.) this is the time to mention it.
+Will add a basic minion master setup
 
 ## Setup
+set the following variables at top scope
+node 'default'{
+  $master_name = 'kube-master'
+    $master_ip = '173.16.32.11'
+    $minion_name = 'kube-minion1'
+    $minion_ip = '173.16.32.12'
+    host{$master_name:
+      ip => $master_ip
+    }
+  host{$minion_name:
+    ip => $minion_ip
+  }
+  class {'kubernetes':
+    master =>$::master
+  }
+  contain 'kubernetes'
+}
+
+I plan to add these variables to hiera asap.
 
 ### What kubernetes affects
-
-* A list of files, packages, services, or operations that the module will alter,
-  impact, or execute on the system it's installed on.
-* This is a great place to stick any warnings.
-* Can be in list or paragraph form.
+kubernetes will install a kube master if $master is true, else it will add a minion
 
 ### Setup Requirements **OPTIONAL**
 
-If your module requires anything extra before setting up (pluginsync enabled,
-etc.), mention it here.
-
+none as yet but std lib will be needed soon
 ### Beginning with kubernetes
 
-The very basic steps needed for a user to get the module up and running.
-
-If your most recent release breaks compatibility or requires particular steps
-for upgrading, you may wish to include an additional section here: Upgrading
-(For an example, see http://forge.puppetlabs.com/puppetlabs/firewall).
-
+I have tested this on CentOS 7 since epel has all of the rpms you will need. no additional packages should be needed. As yet I have not tied down the ordering , this will follow.
 ## Usage
++ node 'default'{
++   $master_name = 'kube-master'
++     $master_ip = '173.16.32.11'
++     $minion_name = 'kube-minion1'
++     $minion_ip = '173.16.32.12'
++     host{$master_name:
++       ip => $master_ip
++     }
++   host{$minion_name:
++     ip => $minion_ip
++   }
++   class {'kubernetes':
++     master =>$::master
++   }
++   contain 'kubernetes'
++ }
 
-Put the classes, types, and resources for customizing, configuring, and doing
-the fancy stuff with your module here.
 
 ## Reference
 
-Here, list the classes, types, providers, facts, etc contained in your module.
-This section should include all of the under-the-hood workings of your module so
-people know what the module is touching on their system but don't need to mess
-with things. (We are working on automating this section!)
+kubernetes
+kubernetes::master
+kubernetes::minion
 
 ## Limitations
 
-This is where you list OS compatibility, version compatibility, etc.
+This should not be considered a production release it is far too young and undeveloped. Nonetheless it can be used as a guide. I would suggest testing this with vagrant.
 
 ## Development
 
-Since your module is awesome, other users will want to play with it. Let them
-know what the ground rules for contributing are.
+I welcome any input since we have very few kubernetes modules
 
-## Release Notes/Contributors/Etc **Optional**
-
-If you aren't using changelog, put your release notes here (though you should
-consider using changelog). You may also add any additional sections you feel are
-necessary or important to include here. Please use the `## ` header.
