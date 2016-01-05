@@ -18,7 +18,7 @@
 This module at present install a kubernetes master and minion. it is still heavily in development as at present should only be used on CentOS 7 unless one wishes to add their own repos
 
 ## Module Description
-Will add a basic minion master setup
+Will add a basic minion/master on a series of CentOS 7 Boxes
 
 ## Setup
 Example master setup
@@ -45,11 +45,11 @@ These values can also be specified in hiera
 kubernetes will install a kube master if $kubernetes::master is true, else it will add a minion
 
 ### Setup Requirements **OPTIONAL**
-
+Be sure epel is enabled, if you do not have epel you will need to `yum install epel-release`
 none as yet but std lib will be needed soon
 ### Beginning with kubernetes
 
-I have tested this on CentOS 7 since epel has all of the rpms you will need. no additional packages should be needed. As yet I have not tied down the ordering , this will follow.
+I have tested this on CentOS 7 since epel has all of the rpms you will need (once epel is enabled), no additional packages should be needed. As yet I have not tied down the ordering , this will follow.
 ## Usage
     class {'kubernetes':
       master => true,
@@ -59,7 +59,7 @@ I have tested this on CentOS 7 since epel has all of the rpms you will need. no 
     contain 'kubernetes'
 
 ## Reference
-
+classes as follows:
 ```
 kubernetes
 kubernetes::master

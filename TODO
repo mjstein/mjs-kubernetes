@@ -1,0 +1,6 @@
+TODO:
+
+. Allow multiple Kubernetes minions
+. Allow docker registry on Kubernetes master
+. Add ServerSpec and Rspec tests
+. Expand allowed kuberntes options
