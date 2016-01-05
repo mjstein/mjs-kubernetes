@@ -21,29 +21,28 @@ This module at present install a kubernetes master and minion. it is still heavi
 Will add a basic minion master setup
 
 ## Setup
-set the following variables at top scope
+Example master setup
 ```
 node 'default'{
-  $master_name = 'kube-master'
-    $master_ip = '173.16.32.11'
-    $minion_name = 'kube-minion1'
-    $minion_ip = '173.16.32.12'
-    host{$master_name:
-      ip => $master_ip
+
+    class {'kubernetes':
+      master => true,
+      master_name => '173.16.32.11', #can be hostname if dns setup
+      minion_name => '173.16.32.12', #can be hostname if dns setup
     }
-  host{$minion_name:
-    ip => $minion_ip
-  }
-  class {'kubernetes':
-    master =>$::master
-  }
-  contain 'kubernetes'
+    contain 'kubernetes'
 }
 ```
-I plan to add these variables to hiera asap.
+These values can also be specified in hiera
+```
+---
+  kuberneters::master: true
+  kubernetes::master_name: '173.16.32.11'
+  kubernetes::minion_name:  '173.16.32.12'
+```
 
 ### What kubernetes affects
-kubernetes will install a kube master if $master is true, else it will add a minion
+kubernetes will install a kube master if $kubernetes::master is true, else it will add a minion
 
 ### Setup Requirements **OPTIONAL**
 
@@ -52,31 +51,20 @@ none as yet but std lib will be needed soon
 
 I have tested this on CentOS 7 since epel has all of the rpms you will need. no additional packages should be needed. As yet I have not tied down the ordering , this will follow.
 ## Usage
-```
- node 'default'{
-   $master_name = 'kube-master'
-     $master_ip = '173.16.32.11'
-     $minion_name = 'kube-minion1'
-     $minion_ip = '173.16.32.12'
-     host{$master_name:
-       ip => $master_ip
-     }
-   host{$minion_name:
-     ip => $minion_ip
-   }
-   class {'kubernetes':
-     master =>$::master
-   }
-   contain 'kubernetes'
- }
-```
+    class {'kubernetes':
+      master => true,
+      master_name => '173.16.32.11', #can be hostname if dns setup
+      minion_name => '173.16.32.12', #can be hostname if dns setup
+    }
+    contain 'kubernetes'
 
 ## Reference
 
+```
 kubernetes
 kubernetes::master
 kubernetes::minion
-
+```
 ## Limitations
 
 This should not be considered a production release it is far too young and undeveloped. Nonetheless it can be used as a guide. I would suggest testing this with vagrant.
