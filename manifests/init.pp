@@ -1,7 +1,8 @@
 # Class: kubernetes
 # ===========================
 #
-# Full description of class kubernetes here.
+# mjs-Kubernetes enables the provisioning of Kubernetes clients and masters.
+# Note that this has been tested on CentOS 7 which incidently has all the packages you need from epel
 #
 # Parameters
 # ----------
@@ -29,18 +30,20 @@
 #
 # @example
 #    class { 'kubernetes':
-#      servers => [ 'pool.ntp.org', 'ntp.local.company.com' ],
+#      master      => true,
+#      minion_name => minion.example.com,
+#      master_name => master.example.com,
 #    }
 #
 # Authors
 # -------
 #
-# Author Name <author@domain.com>
+# Michael Stein <msuddd@gmail.com>
 #
 # Copyright
 # ---------
 #
-# Copyright 2015 Your name here, unless otherwise noted.
+# Copyright 2015 Michael Stein
 #
 class kubernetes($master = false, $master_name, $minion_name, $populate_hosts = false) {
   class{'kubernetes::hosts':
