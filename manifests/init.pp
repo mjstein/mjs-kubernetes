@@ -28,10 +28,15 @@
 # Examples
 # --------
 #
-# @example
-#    class { 'kubernetes':
-#      master      => true,
-#      minion_name => minion.example.com,
+# @example for master
+#
+#    class { 'kubernetes::master':
+#      minion_name => [minion1.example.com,minion2.example.com],
+#      master_name => master.example.com,
+#    }
+# @example for minion
+#    class { 'kubernetes::minion':
+#      minion_name => minion1.example.com,
 #      master_name => master.example.com,
 #    }
 #

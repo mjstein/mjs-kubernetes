@@ -1,6 +1,6 @@
 {
   "name": "chmjs-kubernetes",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": "chmjs",
   "summary": "Early implementation to setup a kubernetes master and minion",
   "license": "Apache-2.0",

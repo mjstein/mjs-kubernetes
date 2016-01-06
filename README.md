@@ -23,10 +23,20 @@ Will add a basic minion/master on a series of CentOS 7 Boxes
 ## Setup
 Example master setup
 ```
-node 'default'{
+node 'master'{
 
-    class {'kubernetes':
-      master => true,
+    class {'kubernetes::master':
+      master_name => '173.16.32.11', #can be hostname if dns setup
+      minion_name => ['173.16.32.12','173.16.32.12'], #can be hostname if dns setup
+    }
+    contain 'kubernetes'
+}
+```
+Example minion setup
+```
+node 'minion'{
+
+    class {'kubernetes::minion':
       master_name => '173.16.32.11', #can be hostname if dns setup
       minion_name => '173.16.32.12', #can be hostname if dns setup
     }
@@ -34,15 +44,22 @@ node 'default'{
 }
 ```
 These values can also be specified in hiera
+
+For a master
 ```
 ---
-  kuberneters::master: true
+  kubernetes::master_name: '173.16.32.11'
+  kubernetes::minion_name:  ['173.16.32.12']
+```
+For minions
+```
+---
   kubernetes::master_name: '173.16.32.11'
   kubernetes::minion_name:  '173.16.32.12'
 ```
 
 ### What kubernetes affects
-kubernetes will install a kube master if $kubernetes::master is true, else it will add a minion
+kubernetes will install a kube master if kubernetes::master class is called, else it will add a minion if kubernetes::minion is called
 
 ### Setup Requirements **OPTIONAL**
 Be sure epel is enabled, if you do not have epel you will need to `yum install epel-release`
@@ -51,12 +68,28 @@ none as yet but std lib will be needed soon
 
 I have tested this on CentOS 7 since epel has all of the rpms you will need (once epel is enabled), no additional packages should be needed. As yet I have not tied down the ordering , this will follow.
 ## Usage
-    class {'kubernetes':
-      master => true,
+Example master setup
+```
+node 'master'{
+
+    class {'kubernetes::master':
+      master_name => '173.16.32.11', #can be hostname if dns setup
+      minion_name => ['173.16.32.12','173.16.32.12'], #can be hostname if dns setup
+    }
+    contain 'kubernetes'
+}
+```
+Example minion setup
+```
+node 'minion'{
+
+    class {'kubernetes::minion':
       master_name => '173.16.32.11', #can be hostname if dns setup
       minion_name => '173.16.32.12', #can be hostname if dns setup
     }
     contain 'kubernetes'
+}
+```
 
 ## Reference
 classes as follows:
