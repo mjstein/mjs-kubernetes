@@ -1,5 +1,5 @@
 # Comma separated list of minions
- KUBELET_ADDRESSES="--machines=<%= @minion_name %>"
+ KUBELET_ADDRESSES="--machines=<%= scope['kubernetes::minion_name'] %>"
 
 # Add you own!
  KUBE_CONTROLLER_MANAGER_ARGS=""

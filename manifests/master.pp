@@ -1,5 +1,8 @@
-class kubernetes::master {
-
+class kubernetes::master($master_name = undef, $minion_name = undef) {
+class{'kubernetes':
+  master_name => $master_name,
+  minion_name => $minion_name,
+}->
 file{'/etc/kubernetes/apiserver':
   content => template('kubernetes/apiserver.erb'),
   notify  => Service['kube-apiserver']

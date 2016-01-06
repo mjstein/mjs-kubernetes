@@ -45,33 +45,21 @@
 #
 # Copyright 2015 Michael Stein
 #
-class kubernetes($master = false, $master_name, $minion_name, $populate_hosts = false) {
+class kubernetes($master_name, $minion_name, $populate_hosts = false) {
   class{'kubernetes::hosts':
     populate_hosts => $populate_hosts,
   }
   contain 'kubernetes::hosts'
 
-package {['docker', 'docker-logrotate', 'kubernetes', 'etcd', 'flannel']:
+  package {['docker', 'docker-logrotate', 'kubernetes', 'etcd', 'flannel']:
     ensure => present,
-}->
+  }->
 
-file{'/etc/kubernetes/config':
-  content => template('kubernetes/kub_config.erb')
-}->
-file{'/etc/sysconfig/flanneld':
-  content => template('kubernetes/flanneld.erb'),
-}
+  file{'/etc/kubernetes/config':
+    content => template('kubernetes/kub_config.erb')
+  }->
+  file{'/etc/sysconfig/flanneld':
+    content => template('kubernetes/flanneld.erb'),
+  }
 
-if $::kubernetes::master {
-  class{'kubernetes::master':
-    require => File['/etc/sysconfig/flanneld']
-  }
-  contain 'kubernetes::master'
-}
-else {
-  class{'kubernetes::minion':
-  require => File['/etc/sysconfig/flanneld']
-  }
-  contain 'kubernetes::minion'
-}
 }
