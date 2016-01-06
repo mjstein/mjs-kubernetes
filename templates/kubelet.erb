@@ -8,7 +8,7 @@
  KUBELET_HOSTNAME="--hostname_override=<%=scope['kubernetes::minion_name']%>"
 
  # location of the api-server
- KUBELET_API_SERVER="--api_servers=http://<%=scope['master_name']%>:8080"
+ KUBELET_API_SERVER="--api_servers=http://<%=scope['kubernetes::master_name']%>:8080"
 
  # Add your own!
  KUBELET_ARGS=""

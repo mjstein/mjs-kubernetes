@@ -18,7 +18,7 @@ file{'/etc/etcd/etcd.conf':
   notify => Service['etcd']
 }->
 
-service{['etcd', 'kube-apiserver', 'kube-controller-manager', 'kube-scheduler']:
+service{['etcd', 'kube-apiserver', 'kube-controller-manager', 'kube-scheduler','docker']:
   ensure => running
 }->
 
