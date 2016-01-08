@@ -1,4 +1,5 @@
 class kubernetes::minion($master_name=undef, $minion_name=undef){
+  validate_string($master_name,$minion_name)
   class{'kubernetes':
     master_name => $master_name,
     minion_name => $minion_name,
