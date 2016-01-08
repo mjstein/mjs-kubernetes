@@ -9,3 +9,4 @@ gem 'facter', '>= 1.7.0'
 gem 'rspec-puppet', '~> 2.0'
 gem 'rspec-puppet-facts'
 gem 'rspec', '< 3.2.0', {"platforms"=>["ruby_18"]}
+gem 'metadata-json-lint'

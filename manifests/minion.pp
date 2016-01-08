@@ -8,6 +8,7 @@ class kubernetes::minion($master_name=undef, $minion_name=undef){
   }~>
   service{['kube-proxy','kubelet', 'docker', 'flanneld']:
     ensure => running,
+    enable => true,
   }
 }
 
