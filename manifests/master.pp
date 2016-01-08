@@ -21,6 +21,7 @@ class kubernetes::master($master_name = undef, $minion_name = undef) {
   service{['etcd', 'kube-apiserver', 'kube-controller-manager', 'kube-scheduler','docker']:
     ensure => running,
     enable => true,
+    before => Service['flanneld']
   }->
 
   file{'/tmp/flannel-config.json':
@@ -31,9 +32,8 @@ class kubernetes::master($master_name = undef, $minion_name = undef) {
   exec{'populate etcd server':
     path    => ['/bin'],
     command => "curl -L http://${::kubernetes::master_name}:4001/v2/keys/flannel/network/config -XPUT --data-urlencode value@/tmp/flannel-config.json",
-    notify  => Service['flanneld'],
     require => File['/tmp/flannel-config.json']
-  }->
+  }~>
   service{'flanneld':
     ensure => running,
     enable => true,
