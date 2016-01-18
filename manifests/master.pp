@@ -15,9 +15,10 @@ class kubernetes::master($master_name = undef, $minion_name = undef) {
   }->
 
   file{'/etc/etcd/etcd.conf':
-    ensure => present,
-    source => 'puppet:///modules/kubernetes/etcd_config',
-    notify => Service['etcd']
+    ensure  => present,
+    source  => 'puppet:///modules/kubernetes/etcd_config',
+    require => Package['etcd'],
+    notify  => Service['etcd'],
   }->
 
   service{['etcd', 'kube-apiserver', 'kube-controller-manager', 'kube-scheduler','docker']:
@@ -34,6 +35,7 @@ class kubernetes::master($master_name = undef, $minion_name = undef) {
   exec{'populate etcd server':
     path    => ['/bin'],
     command => "curl -L http://${::kubernetes::master_name}:4001/v2/keys/flannel/network/config -XPUT --data-urlencode value@/tmp/flannel-config.json",
+    unless  => 'curl -L http://localhost:4001/v2/keys/flannel/network/config;if [ $? -eq 0 ]; then return 1; else return 0;fi', 
     require => File['/tmp/flannel-config.json']
   }~>
   service{'flanneld':
