@@ -11,3 +11,8 @@ gem 'rspec-puppet-facts'
 gem 'rspec', '< 3.2.0', {"platforms"=>["ruby_18"]}
 gem 'metadata-json-lint'
 gem 'guard-rake'
+gem 'librarian-puppet'
+gem 'test-kitchen'
+gem 'kitchen-puppet'
+gem 'kitchen-vagrant'
+gem 'serverspec'
