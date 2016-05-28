@@ -8,4 +8,5 @@ FLANNEL_ETCD="http://<%= @master_name %>:4001"
 FLANNEL_ETCD_KEY="/flannel/network"
 
 # Any additional options that you want to pass
-#FLANNEL_OPTIONS="eth1"
+# Needed for flannel to pick up the correct interface
+FLANNEL_OPTIONS="--iface='eth1'"
