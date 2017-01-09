@@ -1,4 +1,4 @@
-class kubernetes::master($master_name = undef, $minion_name = undef) {
+class kubernetes::master($master_name = undef, $minion_name = undef,$alternate_flannel_interface_bind = false) {
   validate_string($master_name)
   validate_array($minion_name)
   class{'kubernetes':
@@ -21,7 +21,7 @@ class kubernetes::master($master_name = undef, $minion_name = undef) {
     notify  => Service['etcd'],
   }->
 
-  service{['etcd', 'kube-apiserver', 'kube-controller-manager', 'kube-scheduler','docker']:
+  service{['etcd', 'kube-apiserver', 'kube-controller-manager', 'kube-scheduler']:
     ensure => running,
     enable => true,
     before => Service['flanneld']
@@ -39,6 +39,10 @@ class kubernetes::master($master_name = undef, $minion_name = undef) {
     require => File['/tmp/flannel-config.json']
   }~>
   service{'flanneld':
+    ensure => running,
+    enable => true,
+  }~>
+  service{'docker':
     ensure => running,
     enable => true,
   }

@@ -9,4 +9,6 @@ FLANNEL_ETCD_KEY="/flannel/network"
 
 # Any additional options that you want to pass
 # Needed for flannel to pick up the correct interface
-FLANNEL_OPTIONS="--iface='eth1'"
+<%if @alternate_flannel_interface_bind %>
+  FLANNEL_OPTIONS="--iface='<%=@alternate_flannel_interface_bind%>'"
+<% end %>
