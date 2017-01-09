@@ -67,6 +67,9 @@ class kubernetes($master_name, $minion_name, $populate_hosts = false) {
   file{'/etc/kubernetes/config':
     content => template('kubernetes/kub_config.erb')
   }->
+  file{'/etc/kubernetes/proxy':
+    content => template('kubernetes/proxy_config.erb')
+  }->
   file{'/etc/sysconfig/flanneld':
     content => template('kubernetes/flanneld.erb'),
   }
